@@ -1,0 +1,32 @@
+debug: true
+
+#server:
+  #port: 8082
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lekh700 #from lekh700@gmail.com Less secure app access must be on in this gmail account
+    password: lekh_700 #gmail pass
+
+    properties:
+      mail:
+        debug: true
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+
+
+
+# TLS , port 587
+#spring.mail.properties.mail.smtp.starttls.enable=true
+# SSL, post 465
+#spring.mail.properties.mail.smtp.socketFactory.port = 465
+#spring.mail.properties.mail.smtp.socketFactory.class = javax.net.ssl.SSLSocketFactory
