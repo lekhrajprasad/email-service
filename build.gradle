@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.lpras.email'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -16,16 +16,22 @@ configurations {
 }
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
-/*jar {
+jar {
     enabled = true
 }
+
 bootJar {
-    classifier = 'boot'
-}*/
+	archiveClassifier = 'boot'
+}
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    implementation ("com.lpras.email:lombok-model:0.0.2-SNAPSHOT")
 	//implementation 'org.springframework.boot:spring-boot-starter-web'
 	//compileOnly 'org.projectlombok:lombok'
 	//annotationProcessor 'org.projectlombok:lombok'

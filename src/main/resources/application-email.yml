@@ -1,0 +1,21 @@
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: lekh700 #from lekh700@gmail.com Less secure app access must be on in this gmail account
+    password: lekh_700 #gmail pass
+    port: 587
+    properties:
+      mail:
+        debug: true
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: true
