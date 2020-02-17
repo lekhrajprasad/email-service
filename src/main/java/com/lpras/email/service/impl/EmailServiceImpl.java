@@ -58,6 +58,7 @@ public class EmailServiceImpl implements EmailService {
      *  Thanks,
      *  "fromSignature"
      *  "location","phone"
+     *
      * @param to to which email will be sent, only gmail accepted untill now
      * @param from sender email, only gmail accepted untill now
      * @param subject Subjet line of email
@@ -86,15 +87,16 @@ public class EmailServiceImpl implements EmailService {
         MimeMessageHelper helper = null;
         try{
             template = freemarkerConfig.getTemplate("basic-email-template.ftl");
+            html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
         }catch(TemplateNotFoundException | MalformedTemplateNameException | ParseException e){
             e.printStackTrace();
-        } catch(IOException e4){
-            e4.printStackTrace();
-        }
-        try{
-            html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-        }catch(TemplateException | IOException e){
+            throw new EmailDataException(e.getMessage(), new Throwable(e.getCause()));
+        } catch(IOException e){
             e.printStackTrace();
+            throw new EmailDataException(e.getMessage(), new Throwable(e.getCause()));
+        } catch(TemplateException e){
+            e.printStackTrace();
+            throw new EmailDataException(e.getMessage(), new Throwable(e.getCause()));
         }
         if(Strings.isBlank(html))
             html = "Please contact customer support";
@@ -113,16 +115,17 @@ public class EmailServiceImpl implements EmailService {
             else
                 helper.setSubject(subject);
 
-            helper.setFrom(to);
-        }catch(MessagingException me){
-            me.printStackTrace();
-            throw new EmailDataException(me.getMessage());
+            //helper.setFrom(to);
+        }catch(MessagingException e){
+            e.printStackTrace();
+            throw new EmailDataException(e.getMessage(), new Throwable(e.getCause()));
         }
 
         try{
             mailSender.send(message);
-        }catch(MailException me){
-            me.printStackTrace();
+        }catch(MailException e){
+            e.printStackTrace();
+            throw new EmailDataException(e.getMessage(), new Throwable(e.getCause()));
         }
     }
 
